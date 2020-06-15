@@ -1,0 +1,46 @@
+﻿@model Journal.Models.Subject
+@using Journal.Models
+@{
+    ViewBag.Title = "Просмотр предмета";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7" style="padding:2vh 3vw">
+
+        <h2>Просмотр предмета</h2>
+
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Groups)
+                </dt>
+                @if (Model.Groups.Count() != 0)
+                {
+                    foreach (Group group in Model.Groups)
+                    {
+                        <dd>
+                            @group.Name
+                        </dd>
+                    }
+                }
+                else
+                {
+                    <dd>-</dd>
+                }
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Вернуться назад к списку", "Subjects", "Home")
+        </p>
+    </div>
+</div>

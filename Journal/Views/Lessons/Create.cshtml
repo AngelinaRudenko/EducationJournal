@@ -1,0 +1,53 @@
+﻿@model Journal.Models.Lesson
+
+@{
+    ViewBag.Title = "Новое учебное занятие";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7 bg-white rounded" style="padding:2vh 3vw">
+
+        <h3>Новое учебное занятие</h3>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.TextAreaFor(model => model.Theme, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @Html.HiddenFor(model => model.SubjectId, htmlAttributes: new { value = ViewBag.SubjectId })
+
+                <div class="form-group text-center">
+                    <div class="col-md-offset-2 col">
+                        <input type="submit" value="Создать" class="btn btn-success" name="subjectId" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Вернуться к оценкам", "Marks", "Home")
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

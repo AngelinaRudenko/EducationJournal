@@ -1,0 +1,43 @@
+﻿@model Journal.Models.Lesson
+
+@{
+    ViewBag.Title = "Удалить занятие";
+}
+
+<h2>Удалить учебное занятие</h2>
+
+<h3>Вы действительно хотите удалить учебное занятие?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Theme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        @{
+            string date = Model.Date.ToShortDateString();
+
+            <dd>
+                @Html.DisplayFor(model => date)
+            </dd>
+        }
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-success" /> |
+            @Html.ActionLink("Вернуться к оценкам", "Marks", "Home")
+        </div>
+    }
+</div>

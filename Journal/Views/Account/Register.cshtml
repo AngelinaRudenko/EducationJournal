@@ -1,0 +1,82 @@
+﻿@model Journal.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-7 bg-white rounded" style="padding:2vh 3vw">
+        <h3 class="text-center">@ViewBag.Title</h3>
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-7 form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col control-label" })
+                    <div class="col">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    </div>
+                </div>
+
+                <div class="col form-group">
+                    @Html.LabelFor(m => m.Role, new { @class = "col control-label" })
+                    <div class="col">
+                        @Html.RadioButtonFor(u => u.Role, "Преподаватель")
+                        <span>Преподаватель</span> <br />
+                        @Html.RadioButtonFor(u => u.Role, "Ученик")
+                        <span>Ученик</span> <br />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group col row">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col row">
+                @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group col row">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col control-label" })
+                    <div class="col">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col control-label" })
+                    <div class="col">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                <div class="col-md-offset-2 col">
+                    <input type="submit" class="btn btn-success" value="Регистрация" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

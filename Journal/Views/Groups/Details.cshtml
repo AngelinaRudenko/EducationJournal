@@ -1,0 +1,60 @@
+﻿@model Journal.Models.Group
+
+@{
+    ViewBag.Title = "Группа" + Model.Name;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7" style="padding:2vh 3vw">
+
+        <h2>Группа @Model.Name</h2>
+
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Code)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Code)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Members)
+                </dt>
+
+                @foreach (var person in Model.Members)
+                {
+                    <dd>
+                        @person.Name @person.Surname
+                    </dd>
+                }
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Subjects)
+                </dt>
+
+                @foreach (var subject in Model.Subjects)
+                {
+                    <dd>
+                        @subject.Name
+                    </dd>
+                }
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Вернуться к списку", "Groups", "Home")
+        </p>
+    </div>
+</div>
+

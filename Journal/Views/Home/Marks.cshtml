@@ -1,0 +1,140 @@
+﻿@model IEnumerable<Journal.Models.Group>
+@using Journal.Models
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Оценки";
+}
+
+<h2>Оценки</h2>
+
+<div>
+    <hr />
+    @if (User.IsInRole("Преподаватель"))
+    {
+        <div class="row">
+            <div class="col-2">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    @foreach (Group group in Model.ToList())
+                    {
+                        <a class="nav-link" id="v-pills-@group.Id-tab" data-toggle="pill" href="#v-pills-@group.Id" role="tab" aria-controls="v-pills-@group.Id" aria-selected="true">
+                            @group.Name
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="v-pills-tabContent">
+                    @foreach (Group group in Model.ToList())
+                    {
+                        <div class="tab-pane fade" id="v-pills-@group.Id" role="tabpanel" aria-labelledby="v-pills-@group.Id-tab">
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @foreach (Subject subject in group.Subjects)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="nav-@group.Id-@subject.Id-tab" data-toggle="tab" href="#nav-@group.Id-@subject.Id" role="tab" aria-controls="nav-@group.Id-@subject.Id" aria-selected="true">
+                                            @subject.Name
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+
+                            <div class="tab-content" id="myTabContent">
+                                @foreach (Subject subject in group.Subjects)
+                                {
+                                    <div class="tab-pane fade bg-white border-top-0 border" id="nav-@group.Id-@subject.Id" role="tabpanel" aria-labelledby="nav-@group.Id-@subject.Id-tab" style="padding: 2vh 2vw">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-bordered">
+                                                <tr class="table-primary">
+                                                    <th scope="col">ФИО</th>
+                                                    @foreach (var lesson in subject.Lessons.ToList())
+                                                    {
+                                                        <th scope="col">
+                                                            @Html.ActionLink(lesson.Date.ToShortDateString(), "Details", "Lessons", routeValues: new { id = lesson.Id }, htmlAttributes: null)
+                                                        </th>
+                                                    }
+                                                    <th scope="col">@Html.ActionLink("+", "Create", "Lessons", routeValues: new { subjectId = subject.Id }, htmlAttributes: null)</th>
+                                                </tr>
+                                                @foreach (var student in group.Members.ToList())
+                                                {
+                                                    <tr>
+                                                        <td>@student.Name @student.Surname</td>
+                                                        @foreach (var lesson in subject.Lessons.ToList())
+                                                        {
+                                                            //{
+                                                            //    Mark mark = lesson.Marks.FirstOrDefault(x => x.StudentId == student.Id);
+                                                            //}
+
+                                                            if (lesson.Marks.FirstOrDefault(x => x.StudentId == student.Id) != null)
+                                                            {
+                                                                Mark mark = lesson.Marks.FirstOrDefault(x => x.StudentId == student.Id);
+                                                                <td>
+                                                                    @Html.ActionLink(mark.Value, "Edit", "Marks", routeValues: new { id = mark.Id }, htmlAttributes: null)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("+", "Create", "Marks", routeValues: new { lessonId = lesson.Id, studentId = student.Id }, htmlAttributes: null)
+                                                                </td>
+                                                            }
+                                                        }
+                                                        <td></td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered bg-white">
+            <tr>
+                <th>Предмет</th>
+                @foreach (Group group in Model.ToList())
+                {
+                    foreach (Subject subject in group.Subjects)
+                    {
+                        foreach (Lesson lesson in subject.Lessons)
+                        {
+                            string myId = User.Identity.GetUserId();
+                            if (lesson.Marks.Any(x => x.StudentId == myId))
+                            {
+                                string date = lesson.Date.ToShortDateString();
+                                <th>@date</th>
+                            }
+                        }
+                    }
+                }
+            </tr>
+            @foreach (Group group in Model.ToList())
+            {
+                foreach (Subject subject in group.Subjects)
+                {
+                    <tr>
+                        <td>@subject.Name</td>
+                        @foreach (Lesson lesson in subject.Lessons)
+                        {
+                            string myId = User.Identity.GetUserId();
+                            if (lesson.Marks.Any(x => x.StudentId == myId))
+                            {
+                                string mark = lesson.Marks.FirstOrDefault(x => x.StudentId == myId).Value;
+                                <th>@mark</th>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    }
+</div>
+

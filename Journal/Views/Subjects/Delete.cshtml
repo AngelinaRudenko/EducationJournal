@@ -1,0 +1,51 @@
+﻿@model Journal.Models.Subject
+
+@{
+    ViewBag.Title = "Удаление предмета";
+}
+<div class="row justify-content-center">
+    <div class="col-md-7" style="padding:2vh 3vw">
+
+        <h3>Вы уверены, что хотите удалить этот предмет?</h3>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Groups)
+                </dt>
+
+                @if (Model.Groups.Count() != 0)
+                {
+                    foreach (var group in Model.Groups)
+                    {
+                        <dd>
+                            @group.Name
+                        </dd>
+                    }
+                }
+                else
+                {
+                    <dd>-</dd>
+                }
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color text-center">
+                    <input type="submit" value="Удалить" class="btn btn-danger" /> |
+                    @Html.ActionLink("Вернуться назад к списку", "Subjects", "Home")
+                </div>
+            }
+        </div>
+    </div>
+</div>

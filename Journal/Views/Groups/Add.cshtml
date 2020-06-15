@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Добавить группу";
+}
+<div class="row justify-content-center">
+    <div class="col-md-7" style="padding:2vh 3vw">
+        <h2>Добавить группу</h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group">
+                    <div class="col">
+                        @Html.TextBox("groupCode", null, htmlAttributes: new { @class = "form-control", placeholder = "Введите код группы" })
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <div class="col-md-offset-2 col">
+                        <input type="submit" value="Добаваить" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Вернуться к списку", "Groups", "Home")
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

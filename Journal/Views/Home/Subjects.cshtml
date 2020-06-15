@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Journal.Models.Subject>
+
+@{
+    ViewBag.Title = "Предметы";
+}
+<div class="row justify-content-center">
+    <div class="col-md-8" style="padding:2vh 3vw">
+        <h2>Предметы</h2>
+        @if (User.IsInRole("Преподаватель"))
+        {
+            <p>
+                @Html.ActionLink("Создать новый предмет", "Create", "Subjects")
+            </p>
+        }
+        <table class="table table-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                @if (User.IsInRole("Преподаватель"))
+                {
+                    <th></th>
+                }
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @if (User.IsInRole("Преподаватель"))
+                    {
+                        <td>
+                            @Html.ActionLink("Редактировать", "Edit", "Subjects", new { id = item.Id }, null) |
+                            @Html.ActionLink("Просмотреть", "Details", "Subjects", new { id = item.Id }, null) |
+                            @Html.ActionLink("Удалить", "Delete", "Subjects", new { id = item.Id }, null)
+                        </td>
+                    }
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model Journal.Models.Lesson
+
+@{
+    ViewBag.Title = "Просмотр занятия";
+}
+
+<h2>Просмотр учебного занятия</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Theme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        @{
+            string date = Model.Date.ToShortDateString();
+
+            <dd>
+                @Html.DisplayFor(model => date)
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }) |
+    @Html.ActionLink("Вернуться к оценкам", "Marks", "Home")
+</p>
