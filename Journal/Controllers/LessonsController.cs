@@ -10,7 +10,12 @@ namespace Journal.Controllers
 {
     public class LessonsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public LessonsController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         [Authorize(Roles = "Преподаватель")]
         [HttpGet]

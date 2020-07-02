@@ -9,7 +9,12 @@ namespace Journal.Controllers
 {
     public class MarksController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public MarksController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         [Authorize(Roles = "Преподаватель")]
         [HttpGet]

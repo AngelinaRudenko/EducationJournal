@@ -1,16 +1,18 @@
 ﻿using Journal.Models;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Journal.Controllers
 {
     public class SubjectsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public SubjectsController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         [Authorize(Roles = "Преподаватель")]
         [HttpGet]

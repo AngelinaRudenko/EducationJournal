@@ -12,7 +12,12 @@ namespace Journal.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public HomeController()
+        {
+            db = new ApplicationDbContext();
+        }
 
         public ActionResult Index()
         {
